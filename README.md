@@ -45,8 +45,19 @@ Project is created with:
 
 ## Setup
 
-...
+### Postgres
+
+#### Postgres CLI
+
+Access postgres cli
 
 ```
-...
+sudo -u postgres psql
+```
+
+Creat database and user
+
+```SQL
+CREATE USER dbuser WITH PASSWORD 'dbuserpassword';
+CREATE DATABASE dbname WITH OWNER = dbuser;
 ```
