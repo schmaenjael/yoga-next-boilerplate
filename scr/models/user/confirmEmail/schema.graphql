@@ -1,0 +1,5 @@
+# import Alert from "../../../shared.graphql"
+
+type Mutation {
+  confirmEmail(token: String!): [Alert!]
+}
