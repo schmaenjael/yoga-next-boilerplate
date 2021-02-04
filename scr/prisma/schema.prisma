@@ -7,18 +7,19 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model User {
-  id                 String   @id @default(uuid())
+model Users {
+  @@map(name: "users")
+  id                 String   @default(uuid()) @unique
   email              String   @unique
-  userName           String   @unique
+  userName           String   @unique @map("user_name")
   password           String
   confirmed          Boolean  @default(false)
   locked             Boolean  @default(false)
   role               Role     @default(USER)
-  profilePicturePath String
-  firstName          String
-  lastName           String
-  createdAt          DateTime @default(now())
+  profilePicturePath String   @map("profile_picture_path")
+  firstName          String   @map("first_name")
+  lastName           String   @map("last_name")
+  createdAt          DateTime @default(now()) @map("created_at")
 }
 
 enum Role {
