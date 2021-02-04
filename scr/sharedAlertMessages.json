@@ -1,0 +1,39 @@
+{
+  "emailAlert": {
+    "required": "Email is required",
+    "short": "Email must be at least 3 characters",
+    "invalid": "Email is invalid",
+    "taken": "Email is already taken",
+    "unaviable": "Email not found"
+  },
+  "userNameAlert": {
+    "required": "Username is required",
+    "short": "username must be at least 3 characters",
+    "invalid": "Username is invalid",
+    "taken": "Username is already taken"
+  },
+  "passwordAlert": {
+    "required": "Password is required",
+    "short": "Password must be at least 6 characters",
+    "invalid": "Password is invalid",
+    "unequal": "Confirm password must match"
+  },
+  "invalidLogin": {
+    "invalid": "Invalid login"
+  },
+  "tokenError": {
+    "expired": "Token has expired"
+  },
+  "severity": {
+    "error": "error",
+    "warning": "warning",
+    "info": "info",
+    "success": "success"
+  },
+  "alertTitle": {
+    "error": "Error",
+    "warning": "Warning",
+    "info": "Info",
+    "success": "Success"
+  }
+}
