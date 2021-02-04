@@ -6,8 +6,8 @@ import * as RateLimit from 'express-rate-limit';
 import * as RateLimitRedisStore from 'rate-limit-redis';
 import * as chalk from 'chalk';
 
-import * as redis from './redis/redis';
-import * as prisma from './prisma/prisma';
+import * as redis from './database/redis';
+import { prisma } from './database/prisma';
 //import { genSchema } from './utils/genSchema';
 //import { authMiddleware } from './utils/authMiddleware';
 
