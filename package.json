@@ -37,6 +37,7 @@
   },
   "scripts": {
     "start-server": "NODE_ENV=development nodemon --exec \"ts-node\" scr/index.ts",
+    "session-secret": "ts-node scr/scripts/sessionSecret.ts",
     "test": "NODE_ENV=test jest --watch"
   },
   "prisma": {
