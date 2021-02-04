@@ -1,11 +1,13 @@
 import { Redis } from 'ioredis';
+import { PrismaClient } from '@prisma/client';
 
-export interface Session extends Express.Session {
+export interface Session {
   userId?: string;
 }
 
 export interface Context {
   redis: Redis;
+  prisma: PrismaClient;
   url: string;
   session: Session;
   req: Express.Request;
