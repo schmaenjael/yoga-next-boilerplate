@@ -12,8 +12,8 @@ export const redis = new Redis({
   password: process.env.REDIS_PASSWORD as string,
 })
   .on('connect', function () {
-    console.log(chalk.green('[*] Start redis connection'));
+    console.log(chalk.green('[*] Started redis'));
   })
   .on('error', function (error) {
-    console.log(chalk.red('[*] Unable to start redis', error));
+    console.log(chalk.red('[/] Unable to start redis', error));
   });
