@@ -31,17 +31,20 @@ Project is created with:
 
 ### Client
 
+- typescript
 - next
 - snowpack
 - apollo client
 
 ### Server
 
+- typescript
 - graphql-yoga
-- prisma orm
+- prisma
 - nextauth
 - postgresql
 - redis
+- jest
 
 ## Setup
 
@@ -49,15 +52,26 @@ Project is created with:
 
 #### Postgres CLI
 
-Access postgres cli
-
-```
-sudo -u postgres psql
-```
-
 Creat database and user
 
 ```SQL
 CREATE USER dbuser WITH PASSWORD 'dbuserpassword';
 CREATE DATABASE dbname WITH OWNER = dbuser;
+```
+
+### Project
+
+Clone project
+
+```
+git clone https://github.com/heitzlki/yoga-next-boilerplate
+cd yoga-next-boilerplate/
+```
+
+### Dependecies
+
+Install dependencies
+
+```
+yarn install
 ```
