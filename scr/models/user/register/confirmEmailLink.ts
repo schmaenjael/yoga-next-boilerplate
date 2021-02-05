@@ -1,3 +1,8 @@
+// Envoierment variables
+import * as path from 'path';
+import * as dotenv from 'dotenv';
+dotenv.config({ path: path.resolve(__dirname, '..', '..', '..', '.env') });
+
 import { Redis } from 'ioredis';
 import { v4 } from 'uuid';
 
@@ -11,7 +16,7 @@ export const confirmEmailLink = async (
     id,
     userId,
     'ex',
-    parseInt(process.env.REDIS_TOKEN_EXPIRATION) as number
+    parseInt(process.env.REDIS_TOKEN_EXPIRATION as string)
   );
   return `${url}/confirm/${id}`;
 };
