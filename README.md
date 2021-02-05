@@ -37,6 +37,7 @@ Project is created with:
 - apollo client
 - tailwindcss
 - chakra-ui
+- zustand
 
 ### Server
 
