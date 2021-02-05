@@ -12,7 +12,7 @@ async function main() {
     const salt = bcrypt.genSaltSync(Number(process.env.SALT_ROUNDS));
     await prisma.users.create({
       data: {
-        email: faker.internet.email() as string,
+        email: faker.internet.email(),
         userName: faker.name.firstName(),
         password: bcrypt.hashSync('Test123!', salt),
         confirmed: true,
