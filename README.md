@@ -35,6 +35,8 @@ Project is created with:
 - next
 - snowpack
 - apollo client
+- tailwindcss
+- chakra-ui
 
 ### Server
 
