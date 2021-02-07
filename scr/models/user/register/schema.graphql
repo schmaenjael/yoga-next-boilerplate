@@ -1,0 +1,10 @@
+# import Error from "../../../shared.graphql"
+
+type Mutation {
+  register(
+    email: String!
+    userName: String!
+    password: String!
+    confirmPassword: String!
+  ): [Alert!]
+}
