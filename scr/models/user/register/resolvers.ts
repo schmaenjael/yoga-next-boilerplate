@@ -29,7 +29,7 @@ const schema = yup.object().shape({
     .string()
     .required(emailAlert.required)
     .min(3, emailAlert.short)
-    .max(255)
+    .max(255, emailAlert.long)
     .email(),
   userName: yup
     .string()
