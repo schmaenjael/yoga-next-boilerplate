@@ -6,7 +6,7 @@ import * as RateLimit from 'express-rate-limit';
 import * as RateLimitRedisStore from 'rate-limit-redis';
 import * as chalk from 'chalk';
 
-import * as redis from './database/redis';
+import { redis } from './database/redis';
 import { prisma } from './database/prisma';
 //import { genSchema } from './utils/genSchema';
 //import { authMiddleware } from './utils/authMiddleware';
@@ -47,7 +47,7 @@ export const server = new GraphQLServer({
 server.express.use(
   RateLimit({
     store: new RateLimitRedisStore({
-      client: redis.redis,
+      client: redis,
     }),
     windowMs: 15 * 60 * 1000,
     max: 100,
