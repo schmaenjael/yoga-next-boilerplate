@@ -30,7 +30,7 @@ const schema = yup.object().shape({
     .required(emailAlert.required)
     .min(3, emailAlert.short)
     .max(255, emailAlert.long)
-    .email(),
+    .email(emailAlert.invalid),
   userName: yup
     .string()
     .required(userNameAlert.required)
@@ -118,7 +118,7 @@ export const resolvers: ResolverMap = {
           severity: severity.info,
           titel: alertTitle.info,
           path: 'email',
-          message: confirm,
+          message: emailAlert.confirm,
         },
       ];
     },
