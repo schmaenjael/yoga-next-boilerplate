@@ -1,36 +1,50 @@
 // Envoierment variables
-
-// Imports
+import * as path from 'path';
+import * as dotenv from 'dotenv';
+dotenv.config({ path: path.resolve(__dirname, '..', '..', '..', '.env') });
 
 // Utils
 import { ResolverMap } from '../../../types/graphql-utils';
 
-// Database
+// Alerts
+import { tokenAlert } from '../../../alertMessages/tokenAlert';
+import { severity } from '../../../alertMessages/severity';
+import { alertTitle } from '../../../alertMessages/alertTitle';
+import { emailAlert } from '../../../alertMessages/emailAlert';
 
-//confirmEmail resolver
+// ConfirmEmail resolver
 export const resolvers: ResolverMap = {
   Mutation: {
-    confirmEmail: async (_, { token }, { redis }) => {
-      /*
+    confirmEmail: async (_, { token }, { redis, prisma }) => {
       const userId = await redis.get(token);
       if (!userId) {
         return [
           {
-            severity: severityError,
+            severity: severity.error,
+            title: alertTitle.error,
             path: 'token',
-            message: tokenError.expired,
+            message: tokenAlert.expired,
           },
         ];
       }
-      await User.update(
-        {
+      await prisma.users.update({
+        where: {
+          id: userId,
+        },
+        data: {
           confirmed: true,
         },
-        { where: { id: userId } }
-      );
+      });
       await redis.del(token);
-      */
-      //return [{}] confirmed email....
+
+      return [
+        {
+          severity: severity.success,
+          title: alertTitle.success,
+          path: 'email',
+          message: emailAlert.confirmed,
+        },
+      ];
     },
   },
 };
