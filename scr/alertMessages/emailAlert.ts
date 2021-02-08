@@ -5,4 +5,8 @@ export const emailAlert = {
   invalid: 'Email is invalid',
   taken: 'Email is already taken',
   unaviable: 'Email not found',
+  confirm: 'Confirm your email before login',
+  confirmed: 'Email confirmed',
+  locked: 'Account is locked',
+  emailOrPasswordWrong: 'Email or password wrong',
 };
