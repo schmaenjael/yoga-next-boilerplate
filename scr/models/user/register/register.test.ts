@@ -53,6 +53,49 @@ describe('Register', async () => {
     expect(user.email).toEqual(email);
     expect(user.password).not.toEqual(password);
 
+    const response0 = await client.register(
+      email,
+      userName,
+      password,
+      password
+    );
+    expect(response0.data.register).toHaveLength(1);
+    expect(response0.data.register[0]).toEqual({
+      severity: severity.error,
+      titel: alertTitle.error,
+      path: 'email',
+      message: emailAlert.taken,
+    });
+  });
+
+  it('Check for duplicate usernames', async () => {
+    let email = faker.internet.email();
+    let userName = faker.internet.userName();
+    let password = 'Test123!';
+    // Send response wit correct data
+    const response1 = await client.register(
+      email,
+      userName,
+      password,
+      password
+    );
+    // Check response
+    expect(response1.data).toEqual({
+      register: {
+        severity: severity.info,
+        titel: alertTitle.info,
+        path: 'email',
+        message: confirm,
+      },
+    });
+    // Check if new created user is in database
+    const user: any = await prisma.users.findUnique({
+      where: { userName: userName },
+    });
+    expect(user).toHaveLength(1);
+    expect(user.userName).toEqual(userName);
+    expect(user.password).not.toEqual(password);
+
     const response2 = await client.register(
       email,
       userName,
@@ -63,19 +106,20 @@ describe('Register', async () => {
     expect(response2.data.register[0]).toEqual({
       severity: severity.error,
       titel: alertTitle.error,
-      path: 'email',
-      message: emailAlert.taken,
+      path: 'username',
+      message: userNameAlert.taken,
     });
   });
+
   describe('Email yup', async () => {
     it('Required', async () => {
-      const response = await client.register(
+      const response3 = await client.register(
         '',
         faker.internet.userName(),
         'Test123!',
         'Test123!'
       );
-      expect(response.data).toEqual({
+      expect(response3.data).toEqual({
         register: {
           severity: severity.error,
           titel: alertTitle.error,
@@ -86,13 +130,13 @@ describe('Register', async () => {
     });
 
     it('Short', async () => {
-      const response = await client.register(
+      const response4 = await client.register(
         'aa',
         faker.internet.userName(),
         'Test123!',
         'Test123!'
       );
-      expect(response.data).toEqual({
+      expect(response4.data).toEqual({
         register: {
           severity: severity.error,
           titel: alertTitle.error,
@@ -102,18 +146,139 @@ describe('Register', async () => {
       });
     });
     it('Long', async () => {
-      const response = await client.register(
+      const response5 = await client.register(
         `${'a'.repeat(126)}@${'a'.repeat(125)}.${'a'.repeat(3)}`,
         faker.internet.userName(),
         'Test123!',
+        'Test123!'
+      );
+      expect(response5.data).toEqual({
+        register: {
+          severity: severity.error,
+          titel: alertTitle.error,
+          path: 'email',
+          message: emailAlert.long,
+        },
+      });
+    });
+  });
+
+  describe('Username yup', async () => {
+    it('Required', async () => {
+      const response6 = await client.register(
+        faker.internet.email(),
+        '',
+        'Test123!',
+        'Test123!'
+      );
+      expect(response6.data).toEqual({
+        register: {
+          severity: severity.error,
+          titel: alertTitle.error,
+          path: 'userName',
+          message: userNameAlert.required,
+        },
+      });
+    });
+
+    it('Short', async () => {
+      const response7 = await client.register(
+        faker.internet.email(),
+        'aa',
+        'Test123!',
+        'Test123!'
+      );
+      expect(response7.data).toEqual({
+        register: {
+          severity: severity.error,
+          titel: alertTitle.error,
+          path: 'userName',
+          message: userNameAlert.short,
+        },
+      });
+    });
+    it('Long', async () => {
+      const response8 = await client.register(
+        faker.internet.email(),
+        `${'a'.repeat(256)}`,
+        'Test123!',
+        'Test123!'
+      );
+      expect(response8.data).toEqual({
+        register: {
+          severity: severity.error,
+          titel: alertTitle.error,
+          path: 'userName',
+          message: userNameAlert.long,
+        },
+      });
+
+      it('Invalid', async () => {
+        const response9 = await client.register(
+          faker.internet.email(),
+          '123_',
+          'Test123!',
+          'Test123!'
+        );
+        expect(response9.data).toEqual({
+          register: {
+            severity: severity.error,
+            titel: alertTitle.error,
+            path: 'userName',
+            message: userNameAlert.required,
+          },
+        });
+      });
+    });
+  });
+
+  describe('Password yup', async () => {
+    it('Required', async () => {
+      const response10 = await client.register(
+        faker.internet.email(),
+        faker.internet.userName(),
+        '',
+        'Test123!'
+      );
+      expect(response10.data).toEqual({
+        register: {
+          severity: severity.error,
+          titel: alertTitle.error,
+          path: 'password',
+          message: passwordAlert.required,
+        },
+      });
+    });
+
+    it('Short', async () => {
+      const response11 = await client.register(
+        faker.internet.email(),
+        faker.internet.userName(),
+        'Test123',
+        'Test123!'
+      );
+      expect(response11.data).toEqual({
+        register: {
+          severity: severity.error,
+          titel: alertTitle.error,
+          path: 'password',
+          message: passwordAlert.short,
+        },
+      });
+    });
+    it('Long', async () => {
+      const response = await client.register(
+        faker.internet.email(),
+        `${'a'.repeat(256)}`,
+        `${'a'.repeat(256)}`,
         'Test123!'
       );
       expect(response.data).toEqual({
         register: {
           severity: severity.error,
           titel: alertTitle.error,
-          path: 'email',
-          message: emailAlert.long,
+          path: 'password',
+          message: passwordAlert.long,
         },
       });
     });
