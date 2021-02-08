@@ -8,22 +8,11 @@ import * as chalk from 'chalk';
 
 import { redis } from './database/redis';
 import { prisma } from './database/prisma';
-//import { genSchema } from './utils/genSchema';
-//import { authMiddleware } from './utils/authMiddleware';
+import { genSchema } from './utils/genSchema';
+import { authMiddleware } from './utils/authMiddleware';
+import { redisSessionPrefix } from './constants';
 
 const RedisStore = connectRedis(session as any);
-
-const typeDefs = `
-  type Query {
-    hello(name: String): String!
-  }
-`;
-
-const resolvers = {
-  Query: {
-    hello: (_: any, { name }: any) => `Hello ${name || 'World'}`,
-  },
-};
 
 /**
  * Auth middelware for scpecial queries/mutations that require authentication
@@ -31,10 +20,8 @@ const resolvers = {
  * context gives redis and url for e.g the confirmation link without any dotenv configuration
  */
 export const server = new GraphQLServer({
-  //middlewares: [authMiddleware],
-  //schema: genSchema(),
-  typeDefs,
-  resolvers,
+  middlewares: [authMiddleware],
+  schema: genSchema(),
   context: ({ request }) => ({
     redis,
     prisma,
@@ -58,6 +45,7 @@ server.express.use(
   session({
     store: new RedisStore({
       client: redis as any,
+      prefix: redisSessionPrefix,
     }),
     name: 'zid',
     secret: process.env.SESSION_SECRET,
