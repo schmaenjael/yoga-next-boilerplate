@@ -23,7 +23,7 @@ import { severity } from '../../../alertMessages/severity';
 import { alertTitle } from '../../../alertMessages/alertTitle';
 
 // Yup schema
-const { passwordYup } = require('../../../yupSchema');
+const { password } = require('../../../yupSchema');
 const schema = yup.object().shape({
   email: yup
     .string()
@@ -40,7 +40,7 @@ const schema = yup.object().shape({
       /^[A-Za-z](?:[a-zA-Z0-9])*(?:[_-]?[a-zA-Z0-9])*$/,
       userNameAlert.invalid
     ),
-  password: passwordYup,
+  password: password,
   confirmPassword: yup
     .string()
     .required(passwordAlert.confirm.required)
