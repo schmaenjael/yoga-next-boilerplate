@@ -42,4 +42,43 @@ export class TestClient {
       },
     });
   }
+  async login(email: string, password: string) {
+    return rp.post(this.url, {
+      ...this.options,
+      body: {
+        query: `
+            mutation {
+              register(
+                email: "${email}"
+                password: "${password}"
+              ) {
+                severity
+                titel
+                path
+                message
+              }
+            }
+            `,
+      },
+    });
+  }
+  async confirmEmail(token: string) {
+    return rp.post(this.url, {
+      ...this.options,
+      body: {
+        query: `
+              mutation {
+                confirmEmail(
+                  token: "${token}"
+                ) {
+                  severity
+                  titel
+                  path
+                  message
+                }
+              }
+              `,
+      },
+    });
+  }
 }
