@@ -42,7 +42,7 @@ describe('Register', async () => {
         severity: severity.info,
         titel: alertTitle.info,
         path: 'email',
-        message: confirm,
+        message: emailAlert.confirm,
       },
     });
     // Check if new created user is in database
@@ -85,7 +85,7 @@ describe('Register', async () => {
         severity: severity.info,
         titel: alertTitle.info,
         path: 'email',
-        message: confirm,
+        message: emailAlert.confirm,
       },
     });
     // Check if new created user is in database
@@ -161,17 +161,34 @@ describe('Register', async () => {
         },
       });
     });
+
+    it('Invalid', async () => {
+      const response6 = await client.register(
+        'test',
+        faker.internet.userName(),
+        'Test123!',
+        'Test123!'
+      );
+      expect(response6.data).toEqual({
+        register: {
+          severity: severity.error,
+          titel: alertTitle.error,
+          path: 'email',
+          message: emailAlert.invalid,
+        },
+      });
+    });
   });
 
   describe('Username yup', async () => {
     it('Required', async () => {
-      const response6 = await client.register(
+      const response7 = await client.register(
         faker.internet.email(),
         '',
         'Test123!',
         'Test123!'
       );
-      expect(response6.data).toEqual({
+      expect(response7.data).toEqual({
         register: {
           severity: severity.error,
           titel: alertTitle.error,
@@ -182,13 +199,13 @@ describe('Register', async () => {
     });
 
     it('Short', async () => {
-      const response7 = await client.register(
+      const response8 = await client.register(
         faker.internet.email(),
         'aa',
         'Test123!',
         'Test123!'
       );
-      expect(response7.data).toEqual({
+      expect(response8.data).toEqual({
         register: {
           severity: severity.error,
           titel: alertTitle.error,
@@ -198,13 +215,13 @@ describe('Register', async () => {
       });
     });
     it('Long', async () => {
-      const response8 = await client.register(
+      const response9 = await client.register(
         faker.internet.email(),
         `${'a'.repeat(256)}`,
         'Test123!',
         'Test123!'
       );
-      expect(response8.data).toEqual({
+      expect(response9.data).toEqual({
         register: {
           severity: severity.error,
           titel: alertTitle.error,
@@ -214,13 +231,13 @@ describe('Register', async () => {
       });
 
       it('Invalid', async () => {
-        const response9 = await client.register(
+        const response10 = await client.register(
           faker.internet.email(),
           '123_',
           'Test123!',
           'Test123!'
         );
-        expect(response9.data).toEqual({
+        expect(response10.data).toEqual({
           register: {
             severity: severity.error,
             titel: alertTitle.error,
@@ -234,13 +251,13 @@ describe('Register', async () => {
 
   describe('Password yup', async () => {
     it('Required', async () => {
-      const response10 = await client.register(
+      const response11 = await client.register(
         faker.internet.email(),
         faker.internet.userName(),
         '',
         'Test123!'
       );
-      expect(response10.data).toEqual({
+      expect(response11.data).toEqual({
         register: {
           severity: severity.error,
           titel: alertTitle.error,
@@ -251,13 +268,13 @@ describe('Register', async () => {
     });
 
     it('Short', async () => {
-      const response11 = await client.register(
+      const response12 = await client.register(
         faker.internet.email(),
         faker.internet.userName(),
         'Test123',
         'Test123!'
       );
-      expect(response11.data).toEqual({
+      expect(response12.data).toEqual({
         register: {
           severity: severity.error,
           titel: alertTitle.error,
@@ -267,18 +284,51 @@ describe('Register', async () => {
       });
     });
     it('Long', async () => {
-      const response = await client.register(
+      const response13 = await client.register(
         faker.internet.email(),
-        `${'a'.repeat(256)}`,
+        faker.internet.userName(),
         `${'a'.repeat(256)}`,
         'Test123!'
       );
-      expect(response.data).toEqual({
+      expect(response13.data).toEqual({
         register: {
           severity: severity.error,
           titel: alertTitle.error,
           path: 'password',
           message: passwordAlert.long,
+        },
+      });
+    });
+
+    it('Confrimpassword required', async () => {
+      const response14 = await client.register(
+        faker.internet.email(),
+        faker.internet.userName(),
+        'Test123!',
+        ''
+      );
+      expect(response14.data).toEqual({
+        register: {
+          severity: severity.error,
+          titel: alertTitle.error,
+          path: 'confirmPassword',
+          message: passwordAlert.confirm.required,
+        },
+      });
+    });
+    it('Confrimpassword unequal', async () => {
+      const response15 = await client.register(
+        faker.internet.email(),
+        faker.internet.userName(),
+        'Test123!',
+        'Test123'
+      );
+      expect(response15.data).toEqual({
+        register: {
+          severity: severity.error,
+          titel: alertTitle.error,
+          path: 'confirmPassword',
+          message: passwordAlert.confirm.unequal,
         },
       });
     });
