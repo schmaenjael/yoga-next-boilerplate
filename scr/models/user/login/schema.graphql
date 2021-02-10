@@ -1,5 +1,0 @@
-# import Error from "../../../shared.graphql"
-
-type Query {
-  login(email: String!, password: String!): [Alert!]
-}

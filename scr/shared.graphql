@@ -1,6 +1,0 @@
-type Alert {
-  severity: String!
-  titel: String!
-  path: String!
-  message: String!
-}
