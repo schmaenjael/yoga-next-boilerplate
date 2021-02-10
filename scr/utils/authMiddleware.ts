@@ -7,16 +7,6 @@ const isAuthenticated = async (
 ) => {
   if (!context.session || !context.session.userId) {
     return null;
-    /*
-    [
-      {
-        severity: severity.error,
-        titel: alertTitel.error,
-        path: 'user',
-        message: user.unauthenticated,
-      },
-    ];
-    */
   }
   return resolve(parent, args, context, info);
 };
