@@ -1,21 +1,21 @@
 import { ValidationError } from 'yup';
-const { severity, alertTitle } = require('../sharedAlertMessages.json');
+import { severity } from '../alertMessages/severity';
+import { alertTitle } from '../alertMessages/alertTitle';
 
 export const formatYupError = (err: ValidationError) => {
   const errors: Array<{
     severity: string;
-    titel: string;
+    title: string;
     path: string | undefined;
     message: string;
   }> = [];
   err.inner.forEach((e) => {
     errors.push({
       severity: severity.error,
-      titel: alertTitle.error,
+      title: alertTitle.error,
       path: e.path,
       message: e.message,
     });
   });
-
   return errors;
 };
