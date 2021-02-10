@@ -15,6 +15,7 @@ export class TestClient {
       json: true,
     };
   }
+
   async register(
     email: string,
     userName: string,
@@ -75,6 +76,26 @@ export class TestClient {
                   titel
                   path
                   message
+                }
+              }
+              `,
+      },
+    });
+  }
+
+  async me() {
+    return rp.post(this.url, {
+      ...this.options,
+      body: {
+        query: `
+              query {
+                me {
+                  id
+                  email
+                  userName
+                  profilePicturePath
+                  firstName
+                  lastName
                 }
               }
               `,
