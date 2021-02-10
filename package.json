@@ -32,6 +32,7 @@
     "graphql-yoga": "^1.18.3",
     "ioredis": "^4.19.4",
     "merge-graphql-schemas": "^1.7.8",
+    "net": "^1.0.2",
     "nodemailer": "^6.4.17",
     "nodemon": "^2.0.7",
     "path": "^0.12.7",
@@ -48,7 +49,7 @@
     "session-secret": "ts-node scr/scripts/sessionSecret.ts",
     "seed": "ts-node scr/database/seeders/seed-users.ts",
     "migrate": "yarn prisma migrate dev --preview-feature",
-    "test": "NODE_ENV=test jest --watch"
+    "test": "NODE_ENV=test jest --watchAll"
   },
   "prisma": {
     "schema": "./scr/prisma/schema.prisma"
@@ -57,5 +58,20 @@
     "@types/jest": "^26.0.20",
     "jest": "^26.6.3",
     "ts-jest": "^26.5.0"
+  },
+  "jest": {
+    "globalSetup": "./src/testUtils/testSetup.ts",
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ]
   }
 }
