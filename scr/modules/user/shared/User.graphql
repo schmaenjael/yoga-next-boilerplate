@@ -1,0 +1,8 @@
+type User {
+  id: String
+  email: String
+  userName: String
+  profilePicturePath: String
+  firstName: String
+  lastName: String
+}
