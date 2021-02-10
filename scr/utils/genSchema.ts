@@ -1,7 +1,7 @@
 import { mergeTypes, mergeResolvers } from 'merge-graphql-schemas';
 import * as path from 'path';
 import * as fs from 'fs';
-import { makeExecutableSchema } from 'graphql-tools';
+import { makeExecutableSchema } from '@graphql-tools/schema';
 import * as glob from 'glob';
 
 export const genSchema = () => {
