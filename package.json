@@ -1,8 +1,6 @@
 {
   "main": "./scr/index.ts",
   "dependencies": {
-    "@prisma/cli": "^2.16.0",
-    "@prisma/client": "^2.16.0",
     "@types/bcrypt": "^3.0.0",
     "@types/chalk": "^2.2.0",
     "@types/connect-redis": "^0.0.16",
@@ -36,7 +34,6 @@
     "nodemailer": "^6.4.17",
     "nodemon": "^2.0.7",
     "path": "^0.12.7",
-    "prisma": "^2.16.0",
     "rate-limit-redis": "^2.0.0",
     "request-promise": "^4.2.6",
     "ts-node": "^9.1.1",
@@ -47,12 +44,7 @@
   "scripts": {
     "start-server": "NODE_ENV=development nodemon --exec \"ts-node\" scr/index.ts",
     "session-secret": "ts-node scr/scripts/sessionSecret.ts",
-    "seed": "ts-node scr/database/seeders/seed-users.ts",
-    "migrate": "yarn prisma migrate dev --preview-feature",
     "test": "NODE_ENV=test jest --watchAll"
-  },
-  "prisma": {
-    "schema": "./scr/prisma/schema.prisma"
   },
   "devDependencies": {
     "@types/jest": "^26.0.20",
