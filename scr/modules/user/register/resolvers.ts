@@ -22,6 +22,9 @@ import { passwordAlert } from '../../../alertMessages/passwordAlert';
 import { severity } from '../../../alertMessages/severity';
 import { alertTitle } from '../../../alertMessages/alertTitle';
 
+// Database
+import { User } from '../../../database/entity/User';
+
 // Yup schema
 const { password } = require('../../../yupSchema');
 const schema = yup.object().shape({
@@ -51,15 +54,16 @@ const schema = yup.object().shape({
 
 export const resolvers: ResolverMap = {
   Mutation: {
-    register: async (_, args, { redis, prisma, url }): Promise<any> => {
+    register: async (_, args, { redis, url }): Promise<any> => {
       try {
         await schema.validate(args, { abortEarly: false });
       } catch (err) {
         return formatYupError(err);
       }
       let { email, userName, password } = args;
-      const emailAlreadyExists = await prisma.users.findFirst({
+      const emailAlreadyExists = await User.findOne({
         where: { email: email },
+        select: ['id'],
       });
 
       if (emailAlreadyExists) {
@@ -73,8 +77,9 @@ export const resolvers: ResolverMap = {
         ];
       }
 
-      const userAlreadyExists = await prisma.users.findFirst({
+      const userAlreadyExists = await User.findOne({
         where: { userName: userName },
+        select: ['id'],
       });
 
       if (userAlreadyExists) {
@@ -93,18 +98,11 @@ export const resolvers: ResolverMap = {
       );
       const passwordHash: string = bcrypt.hashSync(password, salt);
 
-      let user = await prisma.users.create({
-        data: {
-          email: email,
-          userName: userName,
-          password: passwordHash,
-          confirmed: false,
-          locked: false,
-          profilePicturePath: '',
-          firstName: '',
-          lastName: '',
-        },
-      });
+      let user = await User.create({
+        email: email,
+        userName: userName,
+        password: passwordHash,
+      }).save();
 
       if (process.env.NODE_ENV != 'test') {
         await sendConfirmEmail(

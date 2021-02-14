@@ -12,10 +12,13 @@ import { severity } from '../../../alertMessages/severity';
 import { alertTitle } from '../../../alertMessages/alertTitle';
 import { emailAlert } from '../../../alertMessages/emailAlert';
 
+// Database
+import { User } from '../../../database/entity/User';
+
 // ConfirmEmail resolver
 export const resolvers: ResolverMap = {
   Mutation: {
-    confirmEmail: async (_, { token }, { redis, prisma }) => {
+    confirmEmail: async (_, { token }, { redis }) => {
       const userId = await redis.get(token);
       if (userId == null) {
         return [
@@ -28,14 +31,14 @@ export const resolvers: ResolverMap = {
         ];
       }
 
-      await prisma.users.update({
-        where: {
+      await User.update(
+        {
           id: userId,
         },
-        data: {
+        {
           confirmed: true,
-        },
-      });
+        }
+      );
       await redis.del(token);
 
       return [

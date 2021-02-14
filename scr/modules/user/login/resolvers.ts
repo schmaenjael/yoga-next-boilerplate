@@ -2,7 +2,6 @@
 import * as path from 'path';
 import * as dotenv from 'dotenv';
 dotenv.config({ path: path.resolve(__dirname, '..', '..', '..', '.env') });
-
 // Dependencies
 import * as bcrypt from 'bcrypt';
 import * as yup from 'yup';
@@ -19,6 +18,9 @@ import { emailAlert } from '../../../alertMessages/emailAlert';
 import { severity } from '../../../alertMessages/severity';
 import { alertTitle } from '../../../alertMessages/alertTitle';
 
+// Database
+import { User } from '../../../database/entity/User';
+
 // Yup schema
 const { password } = require('../../../yupSchema');
 const schema = yup.object().shape({
@@ -34,14 +36,14 @@ const schema = yup.object().shape({
 // Login resolver
 export const resolvers: ResolverMap = {
   Query: {
-    login: async (_, args, { redis, prisma, session, req }): Promise<any> => {
+    login: async (_, args, { redis, session, req }): Promise<any> => {
       try {
         await schema.validate(args, { abortEarly: false });
       } catch (err) {
         return formatYupError(err);
       }
       let { email, password } = args;
-      const user = await prisma.users.findFirst({
+      const user = await User.findOne({
         where: { email: email },
       });
 
