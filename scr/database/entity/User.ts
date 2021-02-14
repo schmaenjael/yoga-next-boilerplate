@@ -1,10 +1,16 @@
-import { Entity, Column, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  Unique,
+  BaseEntity,
+} from 'typeorm';
 
 export type UserRoleType = 'admin' | 'user';
 
 @Entity('users')
 @Unique(['id', 'email', 'userName'])
-export class User {
+export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid') id: string;
 
   @Column('varchar', { length: 255 })
