@@ -1,16 +1,10 @@
-import {
-  Entity,
-  Column,
-  BaseEntity,
-  PrimaryGeneratedColumn,
-  Unique,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, Unique } from 'typeorm';
 
 export type UserRoleType = 'admin' | 'user';
 
-@Entity({ name: 'users' })
+@Entity('users')
 @Unique(['id', 'email', 'userName'])
-export class User extends BaseEntity {
+export class User {
   @PrimaryGeneratedColumn('uuid') id: string;
 
   @Column('varchar', { length: 255 })
@@ -34,12 +28,12 @@ export class User extends BaseEntity {
   })
   role: UserRoleType;
 
-  @Column('text', { name: 'profile_picture_path' })
+  @Column('text', { default: '', name: 'profile_picture_path' })
   profilePicturePath: string;
 
-  @Column('varchar', { length: 255, name: 'first_name' })
+  @Column('varchar', { default: '', length: 255, name: 'first_name' })
   firstName: string;
 
-  @Column('varchar', { length: 255, name: 'last_name' })
+  @Column('varchar', { default: '', length: 255, name: 'last_name' })
   lastName: string;
 }
