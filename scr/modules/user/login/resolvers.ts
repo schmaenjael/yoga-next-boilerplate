@@ -22,7 +22,7 @@ import { alertTitle } from '../../../alertMessages/alertTitle';
 import { User } from '../../../database/entity/User';
 
 // Yup schema
-const { password } = require('../../../yupSchema');
+const { password } = require('../../../utils/yupSchema');
 const schema = yup.object().shape({
   email: yup
     .string()

@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-import { passwordAlert } from './alertMessages/passwordAlert';
+import { passwordAlert } from '../alertMessages/passwordAlert';
 export const password = yup
   .string()
   .required(passwordAlert.required)
