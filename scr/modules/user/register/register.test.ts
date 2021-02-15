@@ -5,11 +5,12 @@ dotenv.config({ path: path.resolve(__dirname, '..', '..', '..', '.env') });
 
 // Dependencies
 import * as faker from 'faker';
+import { Connection } from 'typeorm';
+import { User } from '../../../database/entity/User';
 
 // Setup
-import { redis } from '../../../database/redis';
-import { prisma } from '../../../database/prisma';
 import { TestClient } from '../../../utils/TestClient';
+import { startTestTypeorm } from '../../../testUtils/startTestTypeorm';
 
 // Alerts
 import { emailAlert } from '../../../alertMessages/emailAlert';
@@ -18,15 +19,16 @@ import { passwordAlert } from '../../../alertMessages/passwordAlert';
 import { severity } from '../../../alertMessages/severity';
 import { alertTitle } from '../../../alertMessages/alertTitle';
 
-// Shut down redis and prisma after tests
+let conn: Connection;
+beforeAll(async () => {
+  conn = await startTestTypeorm();
+});
 afterAll(async () => {
-  redis.disconnect(), prisma.$disconnect();
+  conn.close();
 });
 
 // Create client
-const client = new TestClient(
-  `http://${process.env.HOST}:${process.env.SERVER_PORT}`
-);
+const client = new TestClient(process.env.TEST_HOST as string);
 
 // Register tests
 describe('Register', () => {
@@ -46,7 +48,7 @@ describe('Register', () => {
       },
     });
     // Check if new created user is in database
-    const user: any = await prisma.users.findUnique({
+    const user: any = await User.findOne({
       where: { email: email },
     });
     expect(user).toHaveLength(1);
@@ -89,7 +91,7 @@ describe('Register', () => {
       },
     });
     // Check if new created user is in database
-    const user: any = await prisma.users.findUnique({
+    const user: any = await User.findOne({
       where: { userName: userName },
     });
     expect(user).toHaveLength(1);
