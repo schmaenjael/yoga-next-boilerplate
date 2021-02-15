@@ -5,11 +5,11 @@ dotenv.config({ path: path.resolve(__dirname, '..', '..', '..', '.env') });
 
 // Dependencies
 import * as faker from 'faker';
+import { Connection } from 'typeorm';
 
 // Setup
-import { redis } from '../../../database/redis';
-import { prisma } from '../../../database/prisma';
 import { TestClient } from '../../../utils/TestClient';
+import { startTestTypeorm } from '../../../testUtils/startTestTypeorm';
 
 // Alerts
 import { emailAlert } from '../../../alertMessages/emailAlert';
@@ -17,15 +17,16 @@ import { passwordAlert } from '../../../alertMessages/passwordAlert';
 import { severity } from '../../../alertMessages/severity';
 import { alertTitle } from '../../../alertMessages/alertTitle';
 
-// Shut down redis and prisma after tests
-afterAll(async () => {
-  redis.disconnect(), prisma.$disconnect();
+const client = new TestClient(process.env.TEST_HOST as string);
+
+let conn: Connection;
+beforeAll(async () => {
+  conn = await startTestTypeorm();
 });
 
-// Create client
-const client = new TestClient(
-  `http://${process.env.HOST}:${process.env.SERVER_PORT}`
-);
+afterAll(async () => {
+  conn.close();
+});
 
 // Login tests
 describe('Login', () => {
