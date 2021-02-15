@@ -6,12 +6,14 @@ dotenv.config({ path: path.resolve(__dirname, '..', '..', '..', '.env') });
 // Dependencies
 import * as faker from 'faker';
 import * as bcrypt from 'bcrypt';
+import { Connection } from 'typeorm';
+import { User } from '../../../database/entity/User';
 
 // Setup
-import { redis } from '../../../database/redis';
-import { prisma } from '../../../database/prisma';
 import { TestClient } from '../../../utils/TestClient';
+import { startTestTypeorm } from '../../../testUtils/startTestTypeorm';
 
+// User data
 let userId = '';
 let email = faker.internet.email();
 let userName = faker.name.firstName();
@@ -19,25 +21,23 @@ const salt = bcrypt.genSaltSync(Number(process.env.SALT_ROUNDS));
 let password = bcrypt.hashSync('Test123!', salt);
 let firstName = faker.name.firstName();
 let lastName = faker.name.lastName();
+
+let conn: Connection;
 beforeAll(async () => {
-  const user = await prisma.users.create({
-    data: {
-      email: email,
-      userName: userName,
-      password: password,
-      confirmed: true,
-      locked: false,
-      profilePicturePath: '/img/no_prfile_picture.png',
-      firstName: firstName,
-      lastName: lastName,
-    },
-  });
+  conn = await startTestTypeorm();
+  const user = await User.create({
+    email: email,
+    userName: userName,
+    password: password,
+    profilePicturePath: '/img/no_prfile_picture.png',
+    firstName: firstName,
+    lastName: lastName,
+  }).save();
   userId = user.id;
 });
 
-// Shut down redis and prisma after tests
 afterAll(async () => {
-  redis.disconnect(), prisma.$disconnect();
+  conn.close();
 });
 
 // Me tests
