@@ -31,7 +31,7 @@ export = [
     password: process.env.TYPEORM_PASSWORD_TEST,
     database: process.env.TYPEORM_DATABASE_TEST,
     synchronize: true,
-    logging: false,
+    logging: true,
     dropSchema: true,
     entities: ['src/database/entity/**/*.ts'],
     migrations: ['src/database/migration/**/*.ts'],
