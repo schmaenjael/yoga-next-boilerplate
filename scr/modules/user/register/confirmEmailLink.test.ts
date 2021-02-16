@@ -28,7 +28,7 @@ beforeAll(async () => {
     userName: faker.name.firstName(),
     password: bcrypt.hashSync(
       'Test123!',
-      bcrypt.genSaltSync(Number(process.env.SALT_ROUNDS))
+      bcrypt.genSaltSync(Number(process.env.SALT_ROUNDS)),
     ),
     profilePicturePath: '/img/no_prfile_picture.png',
     firstName: faker.name.firstName(),
@@ -46,7 +46,7 @@ test('Check if token is stored in redis', async () => {
   const url = await confirmEmailLink(
     `http://${process.env.HOST}:${process.env.SERVER_PORT}`,
     userId,
-    redis
+    redis,
   );
 
   const chunks = url.split('/');

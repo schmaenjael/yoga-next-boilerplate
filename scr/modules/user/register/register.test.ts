@@ -59,7 +59,7 @@ describe('Register', () => {
       email,
       userName,
       password,
-      password
+      password,
     );
     expect(response0.data.register).toHaveLength(1);
     expect(response0.data.register[0]).toEqual({
@@ -79,7 +79,7 @@ describe('Register', () => {
       email,
       userName,
       password,
-      password
+      password,
     );
     // Check response
     expect(response1.data).toEqual({
@@ -102,7 +102,7 @@ describe('Register', () => {
       email,
       userName,
       password,
-      password
+      password,
     );
     expect(response2.data.register).toHaveLength(1);
     expect(response2.data.register[0]).toEqual({
@@ -119,7 +119,7 @@ describe('Register', () => {
         '',
         faker.internet.userName(),
         'Test123!',
-        'Test123!'
+        'Test123!',
       );
       expect(response3.data).toEqual({
         register: {
@@ -136,7 +136,7 @@ describe('Register', () => {
         'aa',
         faker.internet.userName(),
         'Test123!',
-        'Test123!'
+        'Test123!',
       );
       expect(response4.data).toEqual({
         register: {
@@ -152,7 +152,7 @@ describe('Register', () => {
         `${'a'.repeat(126)}@${'a'.repeat(125)}.${'a'.repeat(3)}`,
         faker.internet.userName(),
         'Test123!',
-        'Test123!'
+        'Test123!',
       );
       expect(response5.data).toEqual({
         register: {
@@ -169,7 +169,7 @@ describe('Register', () => {
         'test',
         faker.internet.userName(),
         'Test123!',
-        'Test123!'
+        'Test123!',
       );
       expect(response6.data).toEqual({
         register: {
@@ -188,7 +188,7 @@ describe('Register', () => {
         faker.internet.email(),
         '',
         'Test123!',
-        'Test123!'
+        'Test123!',
       );
       expect(response7.data).toEqual({
         register: {
@@ -205,7 +205,7 @@ describe('Register', () => {
         faker.internet.email(),
         'aa',
         'Test123!',
-        'Test123!'
+        'Test123!',
       );
       expect(response8.data).toEqual({
         register: {
@@ -221,7 +221,7 @@ describe('Register', () => {
         faker.internet.email(),
         `${'a'.repeat(256)}`,
         'Test123!',
-        'Test123!'
+        'Test123!',
       );
       expect(response9.data).toEqual({
         register: {
@@ -237,7 +237,7 @@ describe('Register', () => {
           faker.internet.email(),
           '123_',
           'Test123!',
-          'Test123!'
+          'Test123!',
         );
         expect(response10.data).toEqual({
           register: {
@@ -257,7 +257,7 @@ describe('Register', () => {
         faker.internet.email(),
         faker.internet.userName(),
         '',
-        'Test123!'
+        'Test123!',
       );
       expect(response11.data).toEqual({
         register: {
@@ -274,7 +274,7 @@ describe('Register', () => {
         faker.internet.email(),
         faker.internet.userName(),
         'Test123',
-        'Test123!'
+        'Test123!',
       );
       expect(response12.data).toEqual({
         register: {
@@ -290,7 +290,7 @@ describe('Register', () => {
         faker.internet.email(),
         faker.internet.userName(),
         `${'a'.repeat(256)}`,
-        'Test123!'
+        'Test123!',
       );
       expect(response13.data).toEqual({
         register: {
@@ -307,7 +307,7 @@ describe('Register', () => {
         faker.internet.email(),
         faker.internet.userName(),
         'Test123!',
-        ''
+        '',
       );
       expect(response14.data).toEqual({
         register: {
@@ -323,7 +323,7 @@ describe('Register', () => {
         faker.internet.email(),
         faker.internet.userName(),
         'Test123!',
-        'Test123'
+        'Test123',
       );
       expect(response15.data).toEqual({
         register: {

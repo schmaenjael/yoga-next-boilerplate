@@ -37,7 +37,7 @@ export const resolvers: ResolverMap = {
         },
         {
           confirmed: true,
-        }
+        },
       );
       await redis.del(token);
 

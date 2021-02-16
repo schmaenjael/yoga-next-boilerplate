@@ -15,7 +15,6 @@ const RedisStore = connectRedis(session as any);
 
 export async function startServer() {
   const redis = await startRedis();
-
   if (process.env.NODE_ENV === 'test') {
     await redis.flushall();
   }
@@ -29,7 +28,7 @@ export async function startServer() {
       }),
       windowMs: 15 * 60 * 1000,
       max: 100,
-    })
+    }),
   );
 
   server.express.use(
@@ -47,7 +46,7 @@ export async function startServer() {
         secure: process.env.NODE_ENV === 'production',
         maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
       },
-    } as any)
+    } as any),
   );
 
   const cors = {
@@ -73,13 +72,13 @@ export async function startServer() {
       console.log(
         chalk.green(
           `[*] Started server in ${chalk.underline(
-            process.env.NODE_ENV
+            process.env.NODE_ENV,
           )} mode at ${chalk.underline(
-            `http://${process.env.HOST}:${process.env.SERVER_PORT}`
-          )}`
-        )
+            `http://${process.env.HOST}:${process.env.SERVER_PORT}`,
+          )}`,
+        ),
       );
-    }
+    },
   );
 
   return app;
