@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as dotenv from 'dotenv';
-dotenv.config({ path: path.resolve(__dirname, '.', 'scr', '.env') });
+dotenv.config({ path: path.resolve(__dirname, '.', 'src', '.env') });
 
 export = [
   {
@@ -13,13 +13,13 @@ export = [
     database: process.env.TYPEORM_DATABASE_DEV,
     synchronize: true,
     logging: true,
-    entities: ['scr/database/entity/**/*.ts'],
+    entities: ['src/database/entity/**/*.ts'],
     migrations: ['src/database/migration/**/*.ts'],
-    subscribers: ['src/database/subscriber/**/*.ts'],
+    subsrcibers: ['src/database/subsrciber/**/*.ts'],
     cli: {
       entitiesDir: 'src/database/entity',
       migrationsDir: 'src/database/migration',
-      subscribersDir: 'src/database/subscriber',
+      subsrcibersDir: 'src/database/subsrciber',
     },
   },
   {
@@ -35,11 +35,11 @@ export = [
     dropSchema: true,
     entities: ['src/database/entity/**/*.ts'],
     migrations: ['src/database/migration/**/*.ts'],
-    subscribers: ['src/database/subscriber/**/*.ts'],
+    subsrcibers: ['src/database/subsrciber/**/*.ts'],
     cli: {
       entitiesDir: 'src/database/entity',
       migrationsDir: 'src/database/migration',
-      subscribersDir: 'src/database/subscriber',
+      subsrcibersDir: 'src/database/subsrciber',
     },
   },
   {
@@ -54,11 +54,11 @@ export = [
     logging: false,
     entities: ['src/database/entity/**/*.ts'],
     migrations: ['src/database/migration/**/*.ts'],
-    subscribers: ['src/database/subscriber/**/*.ts'],
+    subsrcibers: ['src/database/subsrciber/**/*.ts'],
     cli: {
       entitiesDir: 'src/database/entity',
       migrationsDir: 'src/database/migration',
-      subscribersDir: 'src/database/subscriber',
+      subsrcibersDir: 'src/database/subsrciber',
     },
   },
 ];

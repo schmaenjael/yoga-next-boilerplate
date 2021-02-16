@@ -1,5 +1,5 @@
 {
-  "main": "./scr/index.ts",
+  "main": "./src/index.ts",
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.12.13",
     "@babel/plugin-transform-typescript": "^7.12.16",
@@ -49,9 +49,9 @@
     "yup": "^0.32.8"
   },
   "scripts": {
-    "start-server": "NODE_ENV=development nodemon --exec \"ts-node\" scr/index.ts",
-    "session-secret": "ts-node scr/scripts/sessionSecret.ts",
-    "test": "NODE_ENV=test jest --runInBand --detectOpenHandles --colors --verbose ./scr/modules/user/register/test.test.ts"
+    "start-server": "NODE_ENV=development nodemon --exec \"ts-node\" src/index.ts",
+    "session-secret": "ts-node src/scripts/sessionSecret.ts",
+    "test": "NODE_ENV=test jest --runInBand --detectOpenHandles --colors --verbose ./src/modules/user/register/test.test.ts"
   },
   "devDependencies": {
     "@types/jest": "^26.0.20",

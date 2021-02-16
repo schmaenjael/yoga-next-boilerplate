@@ -5,7 +5,7 @@ export default async (): Promise<Config.InitialOptions> => {
   return {
     preset: 'ts-jest',
     testEnvironment: 'node',
-    globalSetup: './scr/testUtils/setup.ts',
+    globalSetup: './src/testUtils/setup.ts',
     transform: {
       '^.+\\.ts?$': 'ts-jest',
     },
